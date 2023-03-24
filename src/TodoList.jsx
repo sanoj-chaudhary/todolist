@@ -4,14 +4,18 @@ const TodoList = () => {
     const [activity, setActiivity] = useState('');
     const [listData, setListData] = useState([])
     const [error, setError] = useState(false)
+    const locale = 'en';
+    const [date, setDate] = useState(new Date().toLocaleDateString()); // Save the current date to be able to 
+    const [time, setTime] = useState(new Date().toLocaleTimeString()); // Save the current date to be able to 
 
     const addActivity = () =>{
         if(activity){
             setListData((listData)=>{
-                const updatelist = ([...listData,activity]);
+                const now = new Date();
+                const updatedList = ([...listData, {activity: activity,date: now.toLocaleDateString(locale),time: now.toLocaleTimeString(locale)        }]);
                 setActiivity('')
-                console.log(updatelist)
-                return updatelist;
+                console.warn(updatedList)
+                return updatedList;
             })
         }else{
            alert('Enter your choice')
@@ -44,7 +48,7 @@ const TodoList = () => {
   <ul id="myUL">
     {
         listData.length>0 && listData.map((item,key)=>( 
-        <li>{item}<span onClick={()=>removeItem(key)} class="close">×</span></li> 
+        <li className='listitme'>{item.activity}<span>{item.date} &nbsp;{item.time}</span><span onClick={()=>removeItem(key)} class="close">×</span></li> 
         ))
     }
   </ul>
